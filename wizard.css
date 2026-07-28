@@ -3,10 +3,9 @@
 @font-face{font-family:'Eva Pro';src:url(https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@main/eva-pro-400.woff2) format('woff2');font-weight:400}
 @font-face{font-family:'Argentum';src:url(https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@main/argentum-600.woff2) format('woff2');font-weight:600}
 #msk-wizard{--azul:#2549CD;--magenta:#FF00FF;--navy:#000066;--pessego:#FCD3C2;--azulc:#0098DA;--rosa:#FF0088;--ink:#0e1330;--mut:#6b7086;--line:#e7e9f2;--bg:#eceef6;--card:#fff}
-#msk-wizard *{box-sizing:border-box}
-#msk-wizard{margin:0;background:var(--bg);font-family:'Eva Pro',system-ui,sans-serif;font-weight:400;color:var(--ink)}
-#msk-wizard .stage{display:flex;justify-content:center;padding:24px 16px 8px}
-#msk-wizard .wiz{position:relative;width:412px;max-width:100%;background:#fff;border-radius:30px;border:1px solid #d7dae8;box-shadow:0 14px 44px rgba(20,20,60,.13);overflow:hidden}
+#msk-wizard,#msk-wizard *{box-sizing:border-box}
+#msk-wizard{display:flex;justify-content:center;width:100%;margin:0;padding:24px 16px 8px;background:var(--bg);font-family:'Eva Pro',system-ui,sans-serif;font-weight:400;color:var(--ink)}
+#msk-wizard .wiz{position:relative;width:100%;max-width:412px;min-width:0;background:#fff;border-radius:30px;border:1px solid #d7dae8;box-shadow:0 14px 44px rgba(20,20,60,.13);overflow:hidden}
 #msk-wizard .wztop{padding:18px 18px 4px;display:flex;justify-content:center}
 #msk-wizard .wztop img{height:26px}
 #msk-wizard .steps{display:flex;gap:5px;padding:12px 18px 2px}
@@ -87,3 +86,11 @@
 @keyframes msk-spin{to{transform:rotate(360deg)}}
 #msk-wizard #sc2{padding-bottom:225px}
 #msk-wizard #sc4{padding-bottom:170px}
+@media (min-width:640px){
+#msk-wizard{padding:56px 24px}
+#msk-wizard .wiz{max-width:460px;box-shadow:0 20px 60px rgba(20,20,60,.16)}
+}
+@media (min-width:1024px){
+#msk-wizard{padding:72px 24px}
+#msk-wizard .wiz{max-width:520px}
+}
