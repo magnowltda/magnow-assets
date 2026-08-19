@@ -41,8 +41,8 @@
 #msk-wizard .sz .cap{color:var(--mut);font-size:12px;margin-top:3px}
 #msk-wizard .sz .pu{color:var(--azul);font-size:11.5px;font-family:'Eva Pro';font-weight:600;margin-top:4px}
 #msk-wizard .stp{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:11px;padding:5px 8px;margin-top:4px}
-#msk-wizard .stp button{width:30px;height:30px;border:1px solid var(--line);background:#fff;border-radius:8px;font-size:17px;color:var(--azul);cursor:pointer;line-height:1}
-#msk-wizard .stp span{font-family:'Eva Pro';font-weight:600;min-width:16px;text-align:center}
+#msk-wizard .stp button{width:30px;height:30px;border:1px solid var(--line);background:#fff;border-radius:8px;font-size:20px;font-weight:700;color:var(--azul);cursor:pointer;line-height:1;padding:0;font-family:system-ui,sans-serif}
+#msk-wizard .stp span{font-family:'Eva Pro';font-weight:600;min-width:28px;text-align:center;white-space:nowrap;font-variant-numeric:tabular-nums}
 #msk-wizard .opt{border:1.6px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
 #msk-wizard .opt.on{border-color:var(--azul);background:#f7f9ff}
 #msk-wizard .opt .nm{font-family:'Eva Pro';font-weight:600;font-size:14.5px}
