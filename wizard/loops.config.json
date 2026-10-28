@@ -1,0 +1,16 @@
+{
+  "enabled": false,
+  "defaults": { "aspect_ratio": "16/9" },
+  "slots": {
+    "passo1-viagem":          null,
+    "passo1-eletrico":        null,
+    "passo1-casa-completa":   null,
+    "passo2-30x45":           null,
+    "passo2-50x60":           null,
+    "passo2-60x80":           null,
+    "passo2-70x110":          null,
+    "passo3-topo":            null,
+    "passo3-bomba-eletrica":  null,
+    "passo3-bomba-manual":    null
+  }
+}
