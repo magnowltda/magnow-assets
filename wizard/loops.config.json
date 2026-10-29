@@ -9,7 +9,7 @@
     "passo2-50x60":           null,
     "passo2-60x80":           null,
     "passo2-70x110":          null,
-    "passo3-topo":            null,
+    "passo3-topo":            { "mp4": "wizard/loops/v02-loop-kit-eletrico.mp4", "poster": "wizard/loops/v02-loop-kit-eletrico-poster.jpg" },
     "passo3-bomba-eletrica":  null,
     "passo3-bomba-manual":    null
   }
