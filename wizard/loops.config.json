@@ -1,5 +1,5 @@
 {
-  "enabled": false,
+  "enabled": true,
   "defaults": { "aspect_ratio": "16/9" },
   "slots": {
     "passo1-viagem":          null,
@@ -9,7 +9,8 @@
     "passo2-50x60":           null,
     "passo2-60x80":           null,
     "passo2-70x110":          null,
-    "passo3-topo":            { "mp4": "wizard/loops/v02-loop-kit-eletrico.mp4", "poster": "wizard/loops/v02-loop-kit-eletrico-poster.jpg" },
+    "passo3-topo-eletrica":   { "mp4": "wizard/loops/v02-loop-kit-eletrico.mp4", "poster": "wizard/loops/v02-loop-kit-eletrico-poster.jpg" },
+    "passo3-topo-manual":     { "mp4": "wizard/loops/v07-loop-bomba-manual.mp4", "poster": "wizard/loops/v07-loop-bomba-manual-poster.jpg" },
     "passo3-bomba-eletrica":  null,
     "passo3-bomba-manual":    null
   }
