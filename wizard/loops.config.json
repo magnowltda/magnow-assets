@@ -1,7 +1,8 @@
 {
   "enabled": true,
-  "defaults": { "aspect_ratio": "16/9", "cycle": { "photoMs": 3000, "fadeMs": 300 } },
+  "defaults": { "aspect_ratio": "16/9", "tour": { "enabled": true, "photoMs": 2000, "fadeMs": 300 } },
   "slots": {
+    "passo1-mix":             { "mp4": "wizard/loops/v04-loop-kit-mix.mp4",        "poster": "wizard/loops/v04-loop-kit-mix-poster.jpg" },
     "passo1-viagem":          { "mp4": "wizard/loops/v01-loop-kit-viagem.mp4",     "poster": "wizard/loops/v01-loop-kit-viagem-poster.jpg" },
     "passo1-eletrico":        { "mp4": "wizard/loops/v09-loop-bomba-eletrica.mp4", "poster": "wizard/loops/v09-loop-bomba-eletrica-poster.jpg" },
     "passo1-casa-completa":   { "mp4": "wizard/loops/v03-loop-casa-completa.mp4",  "poster": "wizard/loops/v03-loop-casa-completa-poster.jpg" },
