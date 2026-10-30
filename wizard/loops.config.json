@@ -1,14 +1,14 @@
 {
   "enabled": true,
-  "defaults": { "aspect_ratio": "16/9" },
+  "defaults": { "aspect_ratio": "16/9", "cycle": { "photoMs": 3000, "fadeMs": 300 } },
   "slots": {
     "passo1-viagem":          { "mp4": "wizard/loops/v01-loop-kit-viagem.mp4",     "poster": "wizard/loops/v01-loop-kit-viagem-poster.jpg" },
     "passo1-eletrico":        { "mp4": "wizard/loops/v09-loop-bomba-eletrica.mp4", "poster": "wizard/loops/v09-loop-bomba-eletrica-poster.jpg" },
     "passo1-casa-completa":   { "mp4": "wizard/loops/v03-loop-casa-completa.mp4",  "poster": "wizard/loops/v03-loop-casa-completa-poster.jpg" },
     "passo2-30x45":           null,
-    "passo2-50x60":           { "mp4": "wizard/loops/v06-loop-50x60.mp4",          "poster": "wizard/loops/v06-loop-50x60-poster.jpg" },
-    "passo2-60x80":           { "mp4": "wizard/loops/v07-loop-bomba-manual.mp4",   "poster": "wizard/loops/v07-loop-bomba-manual-poster.jpg" },
-    "passo2-70x110":          { "mp4": "wizard/loops/v08-loop-70x110.mp4",         "poster": "wizard/loops/v08-loop-70x110-poster.jpg" },
+    "passo2-50x60":           null,
+    "passo2-60x80":           null,
+    "passo2-70x110":          null,
     "passo3-topo-eletrica":   { "mp4": "wizard/loops/v02-loop-kit-eletrico.mp4",   "poster": "wizard/loops/v02-loop-kit-eletrico-poster.jpg" },
     "passo3-topo-manual":     { "mp4": "wizard/loops/v10-loop-bomba-manual.mp4",   "poster": "wizard/loops/v10-loop-bomba-manual-poster.jpg" },
     "passo3-bomba-eletrica":  null,
