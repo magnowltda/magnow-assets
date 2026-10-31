@@ -1,5 +1,5 @@
 /*! home-veja-em-uso.js | Faixa "Veja em uso" na HOME da loja (somente "/"). JS puro, sem dependencias.
- *  Colar em Loja virtual > Scripts:  <script src="https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v14/home-veja-em-uso.js" defer></script>
+ *  Colar em Loja virtual > Scripts:  <script src="https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v15/home-veja-em-uso.js" defer></script>
  *  Desligar: ATIVO = false (nova tag + trocar o @vNN no snippet) ou tirar o snippet; ?semfaixa=1 desliga so naquela visita (teste).
  */
 (function () {
@@ -7,7 +7,7 @@
 
   // ---------------------------------------------------------------- configuracao
   var ATIVO = true; // kill switch
-  var BASE = 'https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v14/home/veja-em-uso/';
+  var BASE = 'https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v15/home/veja-em-uso/';
   var CLIPES = [
     { video: BASE + 'uso-1.mp4', poster: BASE + 'uso-1.jpg', legenda: 'Fechando o saco a vácuo' },
     { video: BASE + 'uso-2.mp4', poster: BASE + 'uso-2.jpg', legenda: 'Tirando o ar com a bomba elétrica' },
@@ -206,27 +206,22 @@
     return true;
   }
 
+  // Espera a loja terminar de carregar (e um respiro) antes de mexer no DOM: a faixa fica abaixo da dobra, nao precisa de pressa,
+  // e inserir durante o carregamento pode disparar relayout do carrossel do tema (CLS).
   function iniciar() {
-    if (tentar()) return;
-    var t0 = Date.now(), mo = null, timer = null, agendado = false;
+    var t0 = Date.now(), timer = null;
     function checa() {
-      agendado = false;
-      if (tentar() || Date.now() - t0 > ESPERA_MS) { if (mo) mo.disconnect(); if (timer) clearInterval(timer); }
+      if (tentar() || Date.now() - t0 > ESPERA_MS) { clearInterval(timer); }
     }
-    if (window.MutationObserver) {
-      mo = new MutationObserver(function () {
-        if (agendado) return;
-        agendado = true;
-        (window.requestAnimationFrame || setTimeout)(checa);
-      });
-      mo.observe(document.documentElement, { childList: true, subtree: true });
-    }
-    timer = setInterval(checa, 500); // rede de seguranca
-    setTimeout(function () { if (mo) mo.disconnect(); if (timer) clearInterval(timer); }, ESPERA_MS + 600);
+    timer = setInterval(checa, 500);
+    checa();
+  }
+  function aposCarga(fn) {
+    if (document.readyState === 'complete') setTimeout(fn, 800);
+    else window.addEventListener('load', function () { setTimeout(fn, 800); });
   }
 
   try {
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
-    else iniciar();
+    aposCarga(iniciar);
   } catch (e) { /* nunca quebra a loja */ }
 })();
