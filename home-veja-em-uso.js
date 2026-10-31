@@ -1,5 +1,5 @@
 /*! home-veja-em-uso.js | Faixa "Veja em uso" na HOME da loja (somente "/"). JS puro, sem dependencias.
- *  Colar em Loja virtual > Scripts:  <script src="https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v15/home-veja-em-uso.js" defer></script>
+ *  Colar em Loja virtual > Scripts:  <script src="https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v16/home-veja-em-uso.js" defer></script>
  *  Desligar: ATIVO = false (nova tag + trocar o @vNN no snippet) ou tirar o snippet; ?semfaixa=1 desliga so naquela visita (teste).
  */
 (function () {
@@ -7,14 +7,14 @@
 
   // ---------------------------------------------------------------- configuracao
   var ATIVO = true; // kill switch
-  var BASE = 'https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v15/home/veja-em-uso/';
+  var BASE = 'https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v16/home/veja-em-uso/';
   var CLIPES = [
     { video: BASE + 'uso-1.mp4', poster: BASE + 'uso-1.jpg', legenda: 'Fechando o saco a vácuo' },
     { video: BASE + 'uso-2.mp4', poster: BASE + 'uso-2.jpg', legenda: 'Tirando o ar com a bomba elétrica' },
     { video: BASE + 'uso-3.mp4', poster: BASE + 'uso-3.jpg', legenda: 'Tirando o ar com a bomba manual' }
   ];
   var ANCORA = 'kits prontos'; // titulo do bloco ANTES do qual a faixa entra (comparado sem acento/caixa)
-  var ESPERA_MS = 12000; // quanto tempo esperar o tema montar a home antes de desistir (nao quebra nada)
+  var ESPERA_MS = 180000; // quanto tempo ficar de olho esperando o tema montar o bloco (as colecoes da home carregam sob demanda, ao rolar); depois desiste sem quebrar nada
 
   // ---------------------------------------------------------------- guardas
   if (!ATIVO || !CLIPES.length) return;
@@ -190,12 +190,15 @@
   }
 
   // ---------------------------------------------------------------- inserir quando a ancora existir
+  // As colecoes da home sao montadas sob demanda (ao rolar), entao a ancora pode aparecer tarde. A faixa so entra com o bloco FORA da
+  // tela (abaixo ou acima): inserir em cima de algo visivel empurraria o conteudo (CLS). Se o bloco estiver visivel, espera ele sair.
   var feito = false;
-  function tentar() {
-    if (feito) return true;
-    var a = acharAncora();
-    if (!a) return false;
-    feito = true;
+  function visivel(el) {
+    var r = el.getBoundingClientRect();
+    return r.bottom > 0 && r.top < (window.innerHeight || document.documentElement.clientHeight || 0);
+  }
+  function inserir(a) {
+    if (document.getElementById('vu-faixa')) return;
     var fonte = '';
     try { fonte = getComputedStyle(a.titulo).fontFamily; } catch (e) {}
     var leve = modoLeve();
@@ -203,17 +206,41 @@
     var sec = montar(leve, fonte || 'inherit');
     a.bloco.parentNode.insertBefore(sec, a.bloco);
     if (!leve) ligarVideos(sec);
+  }
+  function tentar() {
+    if (feito) return true;
+    var a = acharAncora();
+    if (!a) return false;
+    feito = true;
+    if (visivel(a.bloco) && window.IntersectionObserver) {
+      var io = new IntersectionObserver(function (es) {
+        if (es[0] && !es[0].isIntersecting) { io.disconnect(); inserir(a); }
+      });
+      io.observe(a.bloco);
+    } else {
+      inserir(a);
+    }
     return true;
   }
 
-  // Espera a loja terminar de carregar (e um respiro) antes de mexer no DOM: a faixa fica abaixo da dobra, nao precisa de pressa,
-  // e inserir durante o carregamento pode disparar relayout do carrossel do tema (CLS).
+  // Espera a loja terminar de carregar (e um respiro) antes de mexer no DOM e fica de olho ate a ancora existir.
   function iniciar() {
-    var t0 = Date.now(), timer = null;
+    var t0 = Date.now(), mo = null, timer = null, agendado = false;
+    function parar() { if (mo) mo.disconnect(); if (timer) clearInterval(timer); }
     function checa() {
-      if (tentar() || Date.now() - t0 > ESPERA_MS) { clearInterval(timer); }
+      agendado = false;
+      if (Date.now() - t0 > ESPERA_MS) { parar(); return; }
+      if (tentar()) parar();
     }
-    timer = setInterval(checa, 500);
+    if (window.MutationObserver) {
+      mo = new MutationObserver(function () {
+        if (agendado) return;
+        agendado = true;
+        setTimeout(checa, 400); // no maximo ~2,5 verificacoes por segundo
+      });
+      mo.observe(document.body || document.documentElement, { childList: true, subtree: true });
+    }
+    timer = setInterval(checa, 1000); // rede de seguranca
     checa();
   }
   function aposCarga(fn) {
