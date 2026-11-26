@@ -1,6 +1,7 @@
 /*! home-veja-em-uso.js | Faixa "Veja em uso" na HOME da loja (somente "/"). JS puro, sem dependencias.
- *  v17: a faixa entra DEPOIS do bloco "Kits Prontos" (na v16 entrava antes). Videos e posters continuam em @v16/home/veja-em-uso/.
- *  Colar em Loja virtual > Scripts:  <script src="https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v17/home-veja-em-uso.js" defer></script>
+ *  v18: o bloco passou a se chamar "Todos os produtos" e a faixa entra depois do banner que vem logo abaixo dele (3 passos).
+ *  v17: a faixa entrava DEPOIS do bloco "Kits Prontos" (na v16 entrava antes). Videos e posters continuam em @v16/home/veja-em-uso/.
+ *  Colar em Loja virtual > Scripts:  <script src="https://cdn.jsdelivr.net/gh/magnowltda/magnow-assets@v18/home-veja-em-uso.js" defer></script>
  *  Desligar: ATIVO = false (nova tag + trocar o @vNN no snippet) ou tirar o snippet; ?semfaixa=1 desliga so naquela visita (teste).
  */
 (function () {
@@ -14,7 +15,7 @@
     { video: BASE + 'uso-2.mp4', poster: BASE + 'uso-2.jpg', legenda: 'Tirando o ar com a bomba elétrica' },
     { video: BASE + 'uso-3.mp4', poster: BASE + 'uso-3.jpg', legenda: 'Tirando o ar com a bomba manual' }
   ];
-  var ANCORA = 'kits prontos'; // titulo do bloco DEPOIS do qual a faixa entra (comparado sem acento/caixa)
+  var ANCORA = 'todos os produtos'; // titulo do bloco de produtos; a faixa entra depois do banner seguinte a ele (comparado sem acento/caixa)
   var ESPERA_MS = 180000; // quanto tempo ficar de olho esperando o tema montar o bloco (as colecoes da home carregam sob demanda, ao rolar); depois desiste sem quebrar nada
 
   // ---------------------------------------------------------------- guardas
@@ -40,12 +41,17 @@
   }
 
   // ---------------------------------------------------------------- ancora
+  function bannerDepois(bloco) {
+    var bs = document.querySelectorAll('section[class*="banner-1"]');
+    for (var k = 0; k < bs.length; k++) if (bloco.compareDocumentPosition(bs[k]) & Node.DOCUMENT_POSITION_FOLLOWING) return bs[k];
+    return bloco; // sem banner abaixo: logo depois dos produtos
+  }
   function acharAncora() {
     var hs = document.querySelectorAll('h1,h2,h3,h4,.theme-title,.collection-name');
     for (var i = 0; i < hs.length; i++) {
       if (norm(hs[i].textContent) !== ANCORA) continue;
       var bloco = hs[i].closest('section') || hs[i].closest('[class*="collection"]');
-      if (bloco && bloco.parentNode && bloco !== document.body) return { bloco: bloco, titulo: hs[i] };
+      if (bloco && bloco.parentNode && bloco !== document.body) return { bloco: bannerDepois(bloco), titulo: hs[i] };
     }
     return null;
   }
